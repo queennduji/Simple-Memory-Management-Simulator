@@ -1,0 +1,103 @@
+Queen Nduji
+
+CIS 545
+
+10/30/17
+
+Readme
+
+		Compiling and Testing Instructions
+
+	The code is compiled using gcc filename.c, and executed in the same folder as a file named ‘test’.
+
+	The paging allocator may not work as intended if it is initialized with a value which is not evenly divisible by 32, as each page is exactly 32 bytes.
+
+	When testing the program, there must be exactly one space between an ‘A’ or ‘D’ and the following byte value, and there must be a line break after the initialize line, and each allocate/deallocate/print line. 
+
+		Example Test Files
+
+(FILE STARTS HERE)
+1024 0
+A 256 1 80 122 54
+A 32 2 15 10 7
+A 512 3 300 98 114
+A 256 4 200 50 6
+D 1
+A 257 5 200 40 17
+D 2
+A 257 6 200 40 17
+P
+(FILE ENDS HERE)
+
+This will use the segmentation allocator because the mode is 0.
+
+Execution Results: 
+
+SEGMENTATION FAULT WITH PROCESS PID: 4, NO HOLE LARGE ENOUGH
+SEGMENTATION FAULT WITH PROCESS PID: 6, NO HOLE LARGE ENOUGH
+Memory size = 1024 bytes, allocated = 776 bytes, free = 248
+There are currently 1 holes, and 2 active processes
+Hole list:
+hole 1: start location = 736, size = 248
+Process list:
+process id=3, size=512 allocation=512
+	text start=436, size=300
+	data start=338, size=98
+	heap start=224, size=114
+process id=5, size=257 allocation=264
+	text start=24, size=200
+	data start=984, size=40
+	heap start=0, size=24
+Failed allocations (No memory) = 2
+
+Test file for paging allocator:
+
+(FILE STARTS HERE)
+1024 1
+A 259 1 65 97 97
+A 64 2 16 16 32
+A 512 3 300 98 114
+A 32 4 16 16 0
+D 2
+A 257 5 200 40 17
+D 3
+A 257 6 200 40 17
+P
+(File ENDS HERE)
+
+(note that mode == 1 for this file)
+
+Execution Results:
+
+Not enough remaining pages to allocate for process 5.
+Memory size = 1024 bytes, total pages 32
+allocated pages = 19, free pages = 13
+There are currently 3 active process
+Free Page list:
+   18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30, 31, 
+Process list:
+ Process id=1, size=259, number of pages=9
+  Virt Page 0 -> Phys Page 0 used: 32 bytes
+  Virt Page 1 -> Phys Page 1 used: 32 bytes
+  Virt Page 2 -> Phys Page 2 used: 32 bytes
+  Virt Page 3 -> Phys Page 3 used: 32 bytes
+  Virt Page 4 -> Phys Page 4 used: 32 bytes
+  Virt Page 5 -> Phys Page 5 used: 32 bytes
+  Virt Page 6 -> Phys Page 6 used: 32 bytes
+  Virt Page 7 -> Phys Page 7 used: 32 bytes
+  Virt Page 8 -> Phys Page 8 used: 3 bytes
+ Process id=4, size=32, number of pages=1
+  Virt Page 0 -> Phys Page 27 used: 32 bytes
+ Process id=6, size=257, number of pages=9
+  Virt Page 0 -> Phys Page 9 used: 32 bytes
+  Virt Page 1 -> Phys Page 10 used: 32 bytes
+  Virt Page 2 -> Phys Page 11 used: 32 bytes
+  Virt Page 3 -> Phys Page 12 used: 32 bytes
+  Virt Page 4 -> Phys Page 13 used: 32 bytes
+  Virt Page 5 -> Phys Page 14 used: 32 bytes
+  Virt Page 6 -> Phys Page 15 used: 32 bytes
+  Virt Page 7 -> Phys Page 16 used: 32 bytes
+  Virt Page 8 -> Phys Page 17 used: 1 bytes
+Failed allocations (No memory) = 1
+
+
